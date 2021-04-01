@@ -8,21 +8,23 @@
 		.box {
 			width: 70px;
 			height: 70px;
-			background-color: teal;
+			background-color: black;
 			font-size: 300%;
 			text-align: center;
 			display: block;
 			position: absolute;
-			top: 100px;
-			left: 0px;  /* <--- Change me! */
+			top: 400px;
+			left: randPosNumber;  /* <--- Change me! */
 		}
+        
+        
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
 </head>
 <body class="board">
 	<!-- HTML for the box -->
-	<div class="box">?</div>
+    <div class="box">?</div>
 
 	<script>
 		(function(){
@@ -33,7 +35,9 @@
 			/////////////////// SETUP DO NOT DELETE //////////////////////////
 			//////////////////////////////////////////////////////////////////
 			
-			var box = jQuery('.box');	// reference to the HTML .box element
+            var box = jQuery('.box');
+
+            // reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
 
@@ -45,30 +49,72 @@
 
 			// moves the Box to a new position on the screen along the X-Axis
 			function moveBoxTo(newPositionX) {
-				box.css("left", newPositionX);
+                box.css("left", newPositionX);
+
 			}
 
 			// changes the text displayed on the Box
 			function changeBoxText(newText) {
-				box.text(newText);
-			}
+                box.text(newText);
+                
+            }
+            
+
 
 			//////////////////////////////////////////////////////////////////
 			/////////////////// YOUR CODE BELOW HERE /////////////////////////
 			//////////////////////////////////////////////////////////////////
 			
 			// TODO 2 - Variable declarations 
-			
+            var positionX = positionX + speed;
+            var points = 0;
+            var speed = 10;
 
-			
+
+           
+
+            //var randPosNumber = Math.random() * boardWidth;
+             
+            
+             function getRandomColor()
+                {
+                    var rValue = Math.random() * 255;
+                    var gValue = Math.random() * 255;
+                    var bValue = Math.random() * 255;
+                    var random1 = Math.floor(rValue);
+                    var random2 = Math.floor(gValue);
+                    var random3= Math.floor(bValue);
+                    var newColor;
+
+                    newColor = "rgb(" + random1 + "," + random2+ "," + random3+ ")";
+                    console.log(newColor);
+
+                    return newColor;
+                                        
+                }
+
 			/* 
 			This Function will be called 20 times/second. Each time it is called,
 			it should move the Box to a new location. If the box drifts off the screen
 			turn it around! 
 			*/
 			function update() {
-				
+                
+                moveBoxTo(positionX);
+                positionX = positionX + speed;
+            
+                if (positionX >= boardWidth)
+                {
+                    speed = -speed;
+                }
 
+                if (positionX < 0)
+                {
+                    speed = speed * -1
+                }
+
+             
+                 
 			};
 
 			/* 
@@ -76,9 +122,26 @@
 			it should increase the points total, increase the speed, and move the box to
 			the left side of the screen.
 			*/
-			function handleBoxClick() {
-				
-
+            function handleBoxClick() 
+            {
+                positionX = 0;
+                points = points + 1;
+                changeBoxText(points);
+                var colorStr = getRandomColor(colorStr);
+                console.log(colorStr);
+                box.css('background-color', colorStr);
+                 
+                
+                if (speed > 0)
+                {
+                    speed = speed + 3;
+                }
+                else
+                {
+                    speed = speed - 3;
+                }
+                
+                
 
 			};
 		})();
