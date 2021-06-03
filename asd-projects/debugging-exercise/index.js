@@ -132,9 +132,9 @@ function bounceCircle(circle){
         circle.speedY *= -1;
     }
     // this bounces off the bottom wall
-    else if (circle.y < boardHeight){
+    else if (circle.y > boardHeight){
         circle.y -= circle.speedY;
-        circle.speedX *= 1;
+        circle.speedY *= -1;
     }
 }
 
