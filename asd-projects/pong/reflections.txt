@@ -1,0 +1,45 @@
+
+////GAMEPLAY BASICS///
+Two players each have control of one paddle. Each player's goal is to hit the ball 
+and prevent it from hitting the wall behind their paddle while trying to make the ball hit the
+wall behind the opponent.
+
+A ball starts along the center line and heads in a diagonal line towards one of the sides.
+If a player scores the ball resets and heads in the direction of the player who did not score.
+Both players' paddles are vertically in the center of their side wall, slightly away from the wall.
+
+A round ends when the ball hits the left or right wall and the opposite player gets a point. 
+The game ends when one player has 5 points.
+
+if statement needed for when a player clicks the screen to begin the game
+If statements needed for ball collisions with the wall and paddles
+If statements needed for each player moving their paddles up and down
+If statements needed for when the ball collides with a side wall, scoring a point
+if statement needed for determining what the ball's starting speed (direction) is based on who scored last
+if statement needed to declare a win for one player if they reach 5 points
+
+
+////VISUAL COMPONENTS/////
+The board is a static background.         --> will need the dimensions of the background for the wall locations.
+
+There is a static center dotted line.    --> will need the height of the line to randomly determine the ball's start.
+
+There are two changing numbers on either side, top, that represent player scores. --> will need the score of each player.
+
+There are two animated and user controlled rectangles on the left and right.
+                                         --> will need the position of each paddle.
+                                             will need the Y speed of each paddle.
+                                             will need the height of each paddle to determine if the ball hits a paddle.
+                                            
+There is one animated ball that bounces. --> will need the posiition of the ball.   
+                                            will need the X & Y speed of the ball.
+
+                                            will need the points for each player.
+                                            will need the most recent player who scored to determine which direction the ball goes towards.
+
+
+/////EVENTS/LOGIC///////
+Players will click W and S and up and down arrows to move their individual paddles vertically.
+The ball will collide with the wall or paddles and must change it's X or Y speed based on it's original speed
+The ball will collide with side walls, scoring a point and resetting the ball to the center line.
+
