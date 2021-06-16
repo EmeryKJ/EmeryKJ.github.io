@@ -11,11 +11,67 @@ body {
   position: relative;
 }
 
-#gameItem {
-  background-color: teal;
-  width: 50px;
-  height: 50px;
+.score
+{
+  width: 80px;
+  height: 40px;
+  background-color: white;
+  font-size: 30px; 
+  font-style: bold;
+  text-align: center;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+}
+
+#p1Score
+{
+  text-align: right;
+  left: 225px;
+  top: 5px
+}
+
+#p2Score
+{
+  text-align: left;
+  left: 140px;
+  top: 5px
+}
+
+#centerLine
+{
+    background-color: white;
+    width: 5px;
+    height: 440px;
+    border: none;                      /*clears any default browser line  settings*/
+    border-top: dashed;
+    left: 220px;
+    position: relative;
+}
+
+.paddle {
+  background-color: white;
+  width: 20px;
+  height: 80px;
+  top: 180px;
+  position: absolute;
+}
+
+#leftPaddle 
+{
+    left: 390px;
+}
+
+#rightPaddle
+{
+    left: 50px;
+}
+
+#ball
+{
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    top: 180px;
+    left: 220px;
+    position: absolute;
 }
