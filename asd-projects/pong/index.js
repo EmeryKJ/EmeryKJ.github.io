@@ -220,11 +220,11 @@ function doCollide(obj1, obj2) {
 
     function redrawGameItem()  // draw the gameitem in the new location, position pixels away from the "top"/left
     {
-        $(leftPaddle).css("top", leftPaddle.id); 
-        $(rightPaddle).css("top", rightPaddle.id); 
+        $('#leftPaddle').css("top", leftPaddle.y); 
+        $('#rightPaddle').css("top", rightPaddle.y); 
 
-        $(ball).css("left", ball.id); 
-        $(ball).css("top", ball.id); 
+        $('#ball').css("left", ball.x); 
+        $('#ball').css("top", ball.y); 
     }
 
     // function between0And4(X, Y)      //sets a slightly random angle of bounce, not working right now
