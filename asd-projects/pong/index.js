@@ -30,6 +30,8 @@ function runProgram(){
   var rightPaddle = makeObject('#rightPaddle');
   var leftPaddle = makeObject('#leftPaddle');
   var ball = makeObject('#ball');
+  ball.speedX = 5;
+  ball.speedY = 0;
 
     //UI Elements
   var p1Score = 0;
@@ -216,13 +218,13 @@ function doCollide(obj1, obj2) {
         ball.y += ball.speedY;
     }
 
-    function redrawGameItem()  // draw the gameitem in the new location, position pixels away from the "top"
+    function redrawGameItem()  // draw the gameitem in the new location, position pixels away from the "top"/left
     {
-        $(leftPaddle).css("top", leftPaddle.y); 
-        $(rightPaddle).css("top", rightPaddle.y); 
+        $(leftPaddle).css("top", leftPaddle.id); 
+        $(rightPaddle).css("top", rightPaddle.id); 
 
-        $(ball).css("left", ball.x); 
-        $(ball).css("top", ball.y); 
+        $(ball).css("left", ball.id); 
+        $(ball).css("top", ball.id); 
     }
 
     // function between0And4(X, Y)      //sets a slightly random angle of bounce, not working right now
