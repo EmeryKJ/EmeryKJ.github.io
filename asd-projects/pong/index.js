@@ -31,16 +31,6 @@ function runProgram(){
   var leftPaddle = makeObject('#leftPaddle');
   var ball = makeObject('#ball');
 
-    var positionY = 0;    //player1 paddle yposition/speed
-    var speedY = 0;
-
-    var position2Y = 0;   //paddles should appear centered, numbers represent pixels                          
-    var speed2Y = 0;        //player 2 paddle yposition/speed
-
-    var ballPositionX = 0;   //ball position/speeds
-    var ballSpeedX = 5;
-    var ballPositionY = 0;   
-    var ballSpeedY = 5;
     //UI Elements
   var p1Score = 0;
   var p2Score = 0;
@@ -86,11 +76,11 @@ function handleP1KeyDown(event)
 {
     if (event.which === player1Input.UP) 
     {
-        speedY = -5;
+        leftPaddle.speedY = -5;
     }
     if (event.which === player1Input.DOWN) 
     {
-        speedY = 5;
+        leftPaddle.speedY = 5;
     }
 }
 
@@ -98,11 +88,11 @@ function handleP2KeyDown(event)
 {
     if (event.which === player2Input.UPW) 
      {
-        speed2Y = -5;
+        rightPaddle.speedY = -5;
     }
     if (event.which === player2Input.DOWNS) 
     {
-        speed2Y = 5;
+       rightPaddle.speedY = 5;
     }
 }
 
@@ -110,11 +100,11 @@ function handleP1KeyUp(event)
 {
     if (event.which === player1Input.UP) 
      {
-        speedY = 0;
+        leftPaddle.speedY = 0;
     }
     if (event.which === player1Input.DOWN) 
     {
-        speedY = 0;
+        leftPaddle.speedY = 0;
     }
 }
 
@@ -122,65 +112,69 @@ function handleP2KeyUp(event)
 {
     if (event.which === player2Input.UPW) 
      {
-        speed2Y = 0;
+        rightPaddle.speedY = 0;
     }
     if (event.which === player2Input.DOWNS) 
     {
-        speed2Y = 0;
+        rightPaddle.speedY = 0;
     }
 }
 function paddleCol()
 {
-    if (positionY >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
+    if (leftPaddle.y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
     {           
-        speedY = -5;
+        leftPaddle.speedY = -5;
     }
-    if (positionY < 0)
+    if (leftPaddle.y < 0)
     {            
-        speedY = 5;
+        leftPaddle.speedY = 5;
     }
-    if (position2Y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
+    if (rightPaddle.y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
     {           
-        speed2Y = -5;
+        rightPaddle.speedY = -5;
     }
-    if (position2Y < 0)
+    if (rightPaddle.y < 0)
     {            
-        speed2Y = 5;
+        rightPaddle.speedY = 5;
     }
 
     }
-    function ballCol()    
-    {
-        if (ballPositionY >= boardHeight) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
-        {           
-           ballSpeedY = -5;
-           
-        }
-        if (ballPositionY < 0)
-        {            
-            ballSpeedY = 5;
-        }
-        if (ballPositionX >= boardWidth)
-        {
-            ballSpeedX = -5;
-        }
-        if (ballPositionX < 0)
-        {
-            ballSpeedX = 5;
-        }
-     
+function ballCol()    
+{
+    if (ball.y >= boardHeight) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
+    {           
+        ball.speedY = -5;
     }
+    if (ball.y < 0)
+    {            
+        ball.speedY = 5;
+    }
+    if (ball.x >= boardWidth)
+    {
+        ball.speedX = -5;
+    }
+    if (ball.x < 0)
+    {
+        ball.speedX = 5;
+    }
+     
+}
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
-// for use if wish to use JS objects rather than CSS. Tried this and had issues/bugs
+function makeObject(id) {
+var gameitem = 
+  {
+    id: id,
+    x: parseFloat($(id).css('left')),
+    y: parseFloat($(id).css('top')),
+    width: $(id).width(),
+    height: $(id).height(),
+    speedX: 0,
+    speedY: 0,
+  }
+   return examples;
 
-function makeObject($id) {
- 	var gameItem = {};
-	gameItem.$id = $($id); 
-    gameItem.x = gameItem.$id.width();
-	gameItem.y = gameItem.$id.height();
-	return gameItem;
 }
 
 // this code also broke everything.
@@ -212,20 +206,20 @@ function doCollide(obj1, obj2) {
 
     function repositionGameItem()   // update the position of the gameitem along the y-axis
     {
-        positionY += speedY;
-        position2Y += speed2Y; 
+        leftPaddle.y += leftPaddle.speedY;
+        rightPaddle.y += rightPaddle.speedY; 
 
-        ballPositionX += ballSpeedX;
-        ballPositionY += ballSpeedY;
+        ball.x += ball.speedX;
+        ball.y += ball.speedY;
     }
 
     function redrawGameItem()  // draw the gameitem in the new location, position pixels away from the "top"
     {
-        $(leftPaddle).css("top", positionY); 
-        $(rightPaddle).css("top", position2Y); 
+        $(leftPaddle).css("top", leftPaddle.y); 
+        $(rightPaddle).css("top", rightPaddle.y); 
 
-        $(ball).css("left", ballPositionX); 
-        $(ball).css("top", ballPositionY); 
+        $(ball).css("left", ball.x); 
+        $(ball).css("top", ball.y); 
     }
 
     // function between0And4(X, Y)      //sets a slightly random angle of bounce, not working right now
@@ -247,8 +241,8 @@ function doCollide(obj1, obj2) {
 
     function resetBall()
     {
-        ballPositionX = 0;
-        ballPositionY = 0;
+        ball.x = 0;
+        ball.y = 0;
         
     }
 
