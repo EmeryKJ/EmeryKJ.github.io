@@ -18,24 +18,36 @@ function runProgram(){
   {
     "UP": 38,  
     "DOWN": 40,
+    "ENTER": 13,
+    "BACK": 8,
   };
 
   var player2Input =
   {
     "UPW": 87,   
-    "DOWNS": 83
-  }
+    "DOWNS": 83,
+    "ENTER": 13,
+    "BACK": 8,
+  };
   
   // Game Item Objects
   var rightPaddle = makeObject('#rightPaddle');
   var leftPaddle = makeObject('#leftPaddle');
   var ball = makeObject('#ball');
-  ball.speedX = 5;
-  ball.speedY = 0;
 
     //UI Elements
-  var p1Score = 0;
-  var p2Score = 0;
+  var p1Score = parseFloat($('#p1Score'));
+  var p2Score = parseFloat($('#p2Score'));
+
+  //Helper Vars
+  var coinflip = Math.floor(Math.random() * 1);
+  var playerIsReady = false;
+  var didP1Score = false;
+  var didP2Score = false;
+
+  var startingX = ball.x;
+  var startingY = ball.y;
+
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
@@ -63,21 +75,25 @@ function runProgram(){
     redrawGameItem();
     ballCol();
     paddleCol();
+
+    if (doCollide(ball, leftPaddle) === true) 
+    {
+        ball.speedX = -5; // bounce ball off paddle Left
+    }
+
+    if (doCollide(ball, rightPaddle) === true) 
+    {
+        ball.speedX = 5; // bounce ball off paddle right
+    }   
   }
 
-  if (doCollide(ball, leftPaddle) === true) {
-  ballSpeedX = -5; // bounce ball off paddle Left
-}
 
-  if (doCollide(ball, rightPaddle) === true) {
-  ballSpeedX = 5; // bounce ball off paddle right
-}
   
   /* 
   Called in response to events.
   */
 
-function handleP1KeyDown(event) 
+function handleP1KeyDown(event) //handles game starting and round restarting as well
 {
     if (event.which === player1Input.UP) 
     {
@@ -86,6 +102,16 @@ function handleP1KeyDown(event)
     if (event.which === player1Input.DOWN) 
     {
         leftPaddle.speedY = 5;
+    }
+
+    if (event.which === player1Input.ENTER || event.which === player2Input.ENTER)
+    {
+        ballStart();
+    }
+
+    if (event.which === player1Input.BACK || event.which === player2Input.BACK)
+    {
+        playerIsReady = true;
     }
 }
 
@@ -156,11 +182,11 @@ function ballCol()
     }
     if (ball.x >= boardWidth)
     {
-        ball.speedX = -5;
+        p2Scored();
     }
     if (ball.x < 0)
     {
-        ball.speedX = 5;
+        p1Scored();
     }
      
 }
@@ -181,8 +207,6 @@ var gameitem =
    return gameitem;
 
 }
-
-// this code also broke everything.
 
 function doCollide(obj1, obj2) {
     // sides of the objects
@@ -209,6 +233,21 @@ function doCollide(obj1, obj2) {
           }
 }
 
+function p1Scored()
+{
+    p1score =+ 1;
+    didP1Score = true;
+    didP2Score = false;
+    resetBall();
+}
+
+function p2Scored()
+{
+    p2score =+ 1;
+    didP2Score = true;
+    didP1Score = false;
+    resetBall();
+}
     function repositionGameItem()   // update the position of the gameitem along the y-axis
     {
         leftPaddle.y += leftPaddle.speedY;
@@ -244,12 +283,54 @@ function doCollide(obj1, obj2) {
     //    }
     // }
 
-    function resetBall()
-    {
-        ball.x = 0;
-        ball.y = 0;
+    function ballStart()
+    {       
+        if (coinflip = 0)
+        {
+            ball.speedX = 5;
+        }
+        else 
+        {
+            ball.speedX = -5;
+        }
         
+        if (coinflip = 0)
+        {
+            ball.speedY = 5;
+        }
+
+        else
+        {
+            ball.speedY = -5;
+        }
     }
+function resetBall()
+{
+        ball.x = startingX;
+        ball.y = startingY;
+        ball.speedX = 0;
+        ball.speedY = 0;
+
+        if (didP1Score === true)
+        {
+            ball.speedX = -5;
+        }
+        
+        else 
+        {
+            ball.speedX = 5;
+        }
+
+        if (coinflip = 0)
+        {
+            ball.speedY = 5;
+        }
+
+        else
+        {
+            ball.speedY = -5;
+        }
+}
 
   function endGame() {
     // stop the interval timer
