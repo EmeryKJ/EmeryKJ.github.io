@@ -235,7 +235,7 @@ function doCollide(obj1, obj2) {
 
 function p1Scored()
 {
-    p1score =+ 1;
+    p1Score += 1;
     didP1Score = true;
     didP2Score = false;
     resetBall();
@@ -243,7 +243,7 @@ function p1Scored()
 
 function p2Scored()
 {
-    p2score =+ 1;
+    p2Score += 1;
     didP2Score = true;
     didP1Score = false;
     resetBall();
