@@ -4,10 +4,9 @@ $(document).ready(function(){
     const $display = $('#display');
 
     // TODO: Call your apply function(s) here
-    applyFilter ()
-
-
-
+    // applyFilter(increaseGreenByBlue);
+    applyFilterNoBackground(reddify);
+    // applyFilterNoBackground(decreaseBlue);
 
     render($display, image);
 });
@@ -17,26 +16,66 @@ $(document).ready(function(){
 /////////////////////////////////////////////////////////
 
 // TODO 1 & 3: Create the applyFilter function here
-function applyFilter ()
+function applyFilter(filterFunction)
 {
-    
-}
-// TODO 5: Create the applyFilterNoBackground function
-
-
-// TODO 2 & 4: Create filter functions
-for (var x = 0; x < image.length; x++)
-{
-    var row = image[x];
-    for (var y = 0; y < image.length; y++)
+    for (var x = 0; x < image.length; x++)
     {
-        var value = image[x][y];
-        var rgbString = image[x][y];
-        var rgbNumbers = rgbStringToArray(rgbString);
-        rgbNumbers[RED] = 255;
-        rgbString = rgbArrayToString(rgbNumbers);
-        image[x][y] = rgbString;
+        var row = image[x];
+        for (var y = 0; y < row.length; y++)
+        {
+            var value = image[x][y];
+            var rgbString = image[x][y];
+            var rgbNumbers = rgbStringToArray(rgbString);
+            filterFunction(rgbNumbers);
+            rgbString = rgbArrayToString(rgbNumbers);
+            image[x][y] = rgbString;
+        }
     }
+}
+
+
+// TODO 6: Create the applyFilterNoBackground function
+function applyFilterNoBackground(filterFunction)
+{
+    var backgroundColor = image[0][0];
+    for (var x = 0; x < image.length; x++)
+    {
+        var row = image[x];
+        if (image[x] != backgroundColor)
+        {
+
+        }
+        for (var y = 0; y < row.length; y++)
+        {
+            if (image[y] != backgroundColor && image[x] != backgroundColor)
+            {
+                var value = image[x][y];
+                var rgbString = image[x][y];
+                var rgbNumbers = rgbStringToArray(rgbString);
+                filterFunction(rgbNumbers);
+                rgbString = rgbArrayToString(rgbNumbers);
+                image[x][y] = rgbString
+            }
+        }
+    }
+}
+
+// TODO 2 & 5: Create filter functions
+
+function reddify(array)       //increases rgb red value to maximmum
+{
+    array[RED] = 255;
+}
+
+function decreaseBlue(array)      //randomly decreases the rgb blue value by a number between 30 and 255
+{
+    array[BLUE] -= Math.floor(Math.random() * (255 - 30 + 1) + 30)
+}
+
+function increaseGreenByBlue(array)     //increase the rgb green value by blue's valuu
+{                                       //looks awful, mission accomplished
+    array[GREEN] += array[BLUE];
+    array[GREEN] = Math.min(255);
 }
 
 // CHALLENGE code goes below here
