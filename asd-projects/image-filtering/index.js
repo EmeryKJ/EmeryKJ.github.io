@@ -31,7 +31,7 @@ for (var x = 0; x < image.length; x++)
     for (var y = 0; y < image.length; y++)
     {
         var value = image[x][y];
-        var rgbString = image[x][x];
+        var rgbString = image[x][y];
         var rgbNumbers = rgbStringToArray(rgbString);
         rgbNumbers[RED] = 255;
         rgbString = rgbArrayToString(rgbNumbers);
