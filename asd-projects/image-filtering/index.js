@@ -4,9 +4,9 @@ $(document).ready(function(){
     const $display = $('#display');
 
     // TODO: Call your apply function(s) here
-    // applyFilter(increaseGreenByBlue);
+    applyFilter(increaseGreenByBlue);
     applyFilterNoBackground(reddify);
-    // applyFilterNoBackground(decreaseBlue);
+    applyFilterNoBackground(decreaseBlue);
 
     render($display, image);
 });
@@ -62,16 +62,15 @@ function reddify(array)       //increases rgb red value to maximmum
     array[RED] = 255;
 }
 
-function decreaseBlue(array)      // decreases the rgb blue value by a number between 30 and 255
+function decreaseBlue(array)      // decreases the rgb blue value by 50
 {
-    array[BLUE] -= 50;
-    array[GREEN] = Math.max(0);
+    array[BLUE] = Math.max(0, BLUE - 50);
+ 
 }
 
-function increaseGreenByBlue(array)     //increase the rgb green value by blue's valuu
+function increaseGreenByBlue(array)     //increase the rgb green value by blue's value
 {                                       //looks awful, mission accomplished
-    array[GREEN] += array[BLUE];
-    array[GREEN] = Math.min(255);
+    array[GREEN] = Math.min(255, GREEN + array[BLUE]);
 }
 
 // CHALLENGE code goes below here
