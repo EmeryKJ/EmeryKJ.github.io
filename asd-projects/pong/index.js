@@ -106,7 +106,7 @@ function handleP1KeyDown(event) //handles game starting and round restarting as 
 
     if (event.which === player1Input.ENTER || event.which === player2Input.ENTER)
     {
-        ballStart();
+        resetBall();
     }
 
     if (event.which === player1Input.BACK || event.which === player2Input.BACK)
@@ -283,27 +283,6 @@ function p2Scored()
     //    }
     // }
 
-    function ballStart()
-    {       
-        if (coinflip = 0)
-        {
-            ball.speedX = 5;
-        }
-        else 
-        {
-            ball.speedX = -5;
-        }
-        
-        if (coinflip = 0)
-        {
-            ball.speedY = 5;
-        }
-
-        else
-        {
-            ball.speedY = -5;
-        }
-    }
 function resetBall()
 {
         ball.x = startingX;
