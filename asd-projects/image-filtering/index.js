@@ -23,7 +23,6 @@ function applyFilter(filterFunction)
         var row = image[x];
         for (var y = 0; y < row.length; y++)
         {
-            var value = image[x][y];
             var rgbString = image[x][y];
             var rgbNumbers = rgbStringToArray(rgbString);
             filterFunction(rgbNumbers);
@@ -41,10 +40,7 @@ function applyFilterNoBackground(filterFunction)
     for (var x = 0; x < image.length; x++)
     {
         var row = image[x];
-        if (image[x] != backgroundColor)
-        {
 
-        }
         for (var y = 0; y < row.length; y++)
         {
             if (image[y] != backgroundColor && image[x] != backgroundColor)
@@ -67,9 +63,9 @@ function reddify(array)       //increases rgb red value to maximmum
     array[RED] = 255;
 }
 
-function decreaseBlue(array)      //randomly decreases the rgb blue value by a number between 30 and 255
+function decreaseBlue(array)      // decreases the rgb blue value by a number between 30 and 255
 {
-    array[BLUE] -= Math.floor(Math.random() * (255 - 30 + 1) + 30)
+    array[BLUE] -= 50
 }
 
 function increaseGreenByBlue(array)     //increase the rgb green value by blue's valuu
