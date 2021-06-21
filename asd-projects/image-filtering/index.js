@@ -43,9 +43,8 @@ function applyFilterNoBackground(filterFunction)
 
         for (var y = 0; y < row.length; y++)
         {
-            if (image[y] != backgroundColor && image[x] != backgroundColor)
+            if (image[x][y] != backgroundColor)
             {
-                var value = image[x][y];
                 var rgbString = image[x][y];
                 var rgbNumbers = rgbStringToArray(rgbString);
                 filterFunction(rgbNumbers);
@@ -65,7 +64,8 @@ function reddify(array)       //increases rgb red value to maximmum
 
 function decreaseBlue(array)      // decreases the rgb blue value by a number between 30 and 255
 {
-    array[BLUE] -= 50
+    array[BLUE] -= 50;
+    array[GREEN] = Math.max(0);
 }
 
 function increaseGreenByBlue(array)     //increase the rgb green value by blue's valuu

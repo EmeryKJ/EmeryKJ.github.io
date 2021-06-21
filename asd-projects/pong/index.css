@@ -11,7 +11,7 @@ body {
   position: relative;
 }
 
-.score
+/* .score
 {
   width: 80px;
   height: 40px;
@@ -34,7 +34,7 @@ body {
   text-align: left;
   left: 140px;
   top: 5px
-}
+} */
 
 #centerLine
 {

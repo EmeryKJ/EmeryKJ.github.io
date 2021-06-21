@@ -36,12 +36,10 @@ function runProgram(){
   var ball = makeObject('#ball');
 
     //UI Elements
-  var p1Score = parseFloat($('#p1Score'));
-  var p2Score = parseFloat($('#p2Score'));
+  var p1Score = 0;
+  var p2Score = 0
 
   //Helper Vars
-  var coinflip = Math.floor(Math.random() * 1);
-  var playerIsReady = false;
   var didP1Score = false;
   var didP2Score = false;
 
@@ -107,11 +105,6 @@ function handleP1KeyDown(event) //handles game starting and round restarting as 
     if (event.which === player1Input.ENTER || event.which === player2Input.ENTER)
     {
         resetBall();
-    }
-
-    if (event.which === player1Input.BACK || event.which === player2Input.BACK)
-    {
-        playerIsReady = true;
     }
 }
 
@@ -285,6 +278,9 @@ function p2Scored()
 
 function resetBall()
 {
+    var ranNum = Math.ceil(Math.random() * 4) * (Math.round(Math.random()) ? 2 : -1)
+    //this gets a random number between 1 and 5, adds a minus sign 50% of the time
+
         ball.x = startingX;
         ball.y = startingY;
         ball.speedX = 0;
@@ -293,22 +289,13 @@ function resetBall()
         if (didP1Score === true)
         {
             ball.speedX = -5;
-        }
-        
+        }  
         else 
         {
             ball.speedX = 5;
         }
 
-        if (coinflip = 0)
-        {
-            ball.speedY = 5;
-        }
-
-        else
-        {
-            ball.speedY = -5;
-        }
+        ball.speedY = ranNum;
 }
 
   function endGame() {
