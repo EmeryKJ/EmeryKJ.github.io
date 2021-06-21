@@ -25,17 +25,17 @@ function applyFilter ()
 
 
 // TODO 2 & 4: Create filter functions
-for (var x = 1; x <= 14; x++)
+for (var x = 0; x < image.length; x++)
 {
     var row = image[x];
-    for (var y = 1; y <= 17; y++)
+    for (var y = 0; y < image.length; y++)
     {
         var value = image[x][y];
-        var rgbString = image[1][2];
+        var rgbString = image[x][x];
         var rgbNumbers = rgbStringToArray(rgbString);
         rgbNumbers[RED] = 255;
         rgbString = rgbArrayToString(rgbNumbers);
-        image[1][2] = rgbString;
+        image[x][y] = rgbString;
     }
 }
 
