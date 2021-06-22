@@ -64,13 +64,13 @@ function reddify(array)       //increases rgb red value to maximmum
 
 function decreaseBlue(array)      // decreases the rgb blue value by 50
 {
-    array[BLUE] = Math.max(0, BLUE - 50);
+    array[BLUE] = Math.max(0, [BLUE] - 50);
  
 }
 
 function increaseGreenByBlue(array)     //increase the rgb green value by blue's value
 {                                       //looks awful, mission accomplished
-    array[GREEN] = Math.min(255, GREEN + array[BLUE]);
+    array[GREEN] = Math.min(255, [GREEN] + array[BLUE]);
 }
 
 // CHALLENGE code goes below here
