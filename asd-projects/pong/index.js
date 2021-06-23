@@ -77,6 +77,7 @@ function runProgram(){
     redrawGameItem();
     ballCol();
     paddleCol();
+    playerWins()
     
 
     if (doCollide(ball, rightPaddle) === true) 
@@ -88,12 +89,11 @@ function runProgram(){
     {
         ball.speedX = 5; // bounce ball off paddle right
     }   
-  }
+}
 
-  }
   //scoring
   function playerWins()
-  {
+    {
        if (p1Score === 10)
        {
          window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
@@ -311,12 +311,14 @@ function resetBall()
 }
 
 function resetGame()
-    {
-        ball.x = startingX;
-        ball.y = startingY;
-        ball.speedX = 0;
-        ball.speedY = 0;
-    }
+{
+    ball.x = startingX;
+    ball.y = startingY;
+    ball.speedX = 0;
+    ball.speedY = 0;  
+}
+
+  
 
   function endGame() {
     // stop the interval timer
@@ -326,5 +328,5 @@ function resetGame()
     $(document).off();
   }
 
-}
+
  
