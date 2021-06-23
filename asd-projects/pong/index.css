@@ -6,6 +6,8 @@ body {
 #board {
   width: 440px;
   height: 440px;
+  top: 70px;
+  left: 50px;
   border: 1px solid white;
   background-color: black;
   position: relative;
@@ -14,12 +16,12 @@ body {
 #instructions
 {
   position: relative;
-  top: 50px;
+  top: -80px;
 }
 
 .score
 {
-  width: 80px;
+  width: 40px;
   height: 40px;
   background-color: white;
   font-size: 30px; 
@@ -30,27 +32,30 @@ body {
 
 #p1Score
 {
-  text-align: left;
-  left: 140px;
-  top: 5px
+  text-align: right;
+  left: -40px;
+  top: 180px
 }
 
 #p2Score
 {
-  text-align: right;
-  left: 225px;
-  top: 5px
+  text-align: left;
+  left: 440px;
+  top: 180px
 }
 
-#centerLine
+#p3Score
 {
-    background-color: white;
-    width: 5px;
-    height: 440px;
-    border: none;                      /*clears any default browser line  settings*/
-    border-top: dashed;
-    left: 220px;
-    position: relative;
+  text-align: left;
+  left: 220px;
+  top: -70px
+}
+
+#p4Score
+{
+  text-align: left;
+  left: 220px;
+  top: 410px
 }
 
 .paddle {
@@ -59,6 +64,20 @@ body {
   height: 80px;
   top: 180px;
   position: absolute;
+}
+
+#leftPaddle
+{
+    border: 2px solid green;
+    left: 20px;
+    text-align: center;   
+}
+
+#leftPaddleDown
+{
+  position: absolute;
+  top: 43px;
+  left: 6px;
 }
 
 #rightPaddle 
@@ -74,18 +93,36 @@ body {
   left: 7px;
 }
 
-#leftPaddle
+#topPaddle 
 {
-    border: 2px solid green;
-    left: 50px;
-    text-align: center;   
+  border: 2px solid red;
+  top: 20px;
+  left: 180px;
+  width: 80px;
+  height: 20px;
+  text-align: right;
 }
-
-#leftPaddleDown
+#topPaddleDown
 {
   position: absolute;
-  top: 43px;
-  left: 6px;
+  top: -16px;
+  left: 0px;
+}
+
+#bottomPaddle 
+{
+  border: 2px solid red;
+  top: 400px;
+  left: 180px;
+  width: 80px;
+  height: 20px;
+  text-align: right;
+}
+#bottomPaddleDown
+{
+  position: absolute;
+  top: 386px;
+  left: 183px;
 }
 
 #ball

@@ -28,24 +28,46 @@ function runProgram(){
     "DOWN": 40,
     "ENTER": 13,
     "BACK": 8,
+  };
 
+  var player3Input =
+  {
+    "LEFTA": 65,  
+    "RIGHTD": 68,
+    "ENTER": 13,
+    "BACK": 8,
+  };
+
+  var player4Input =
+  {
+    "LEFT": 37,  
+    "RIGHT": 39,
+    "ENTER": 13,
+    "BACK": 8,
   };
   
   // Game Item Objects
   var rightPaddle = makeObject('#rightPaddle');
   var leftPaddle = makeObject('#leftPaddle');
+  var topPaddle = makeObject('#topPaddle');
+  var bottomPaddle = makeObject('#bottomPaddle');
+
   var ball = makeObject('#ball');
 
-    //UI Elements
+    //UI & Score Elements
 
   var p1Score = 0;
   var p2Score = 0;
+  var p3Score = 0;
+  var p4Score = 0;
+
   var p1Counter = document.getElementById("p1Score");
   var p2Counter = document.getElementById("p2Score");
+  var p3Counter = document.getElementById("p3Score");
+  var p4Counter = document.getElementById("p4Score");
 
   //Helper Vars
   var didP1Score = false;
-  var didP2Score = false;
 
   var startingX = ball.x;
   var startingY = ball.y;
@@ -56,12 +78,19 @@ function runProgram(){
 
     $(document).on('keydown', handleP1KeyDown); 
     $(document).on('keydown', handleP2KeyDown);
+    $(document).on('keydown', handleP3KeyDown);
+    $(document).on('keydown', handleP4KeyDown);
   
     $(document).on('keyup', handleP2KeyUp); 
     $(document).on('keyup', handleP1KeyUp);
+    $(document).on('keyup', handleP3KeyUp);
+    $(document).on('keyup', handleP4KeyUp);
     
+
     $('#rightPaddleDown').appendTo('#rightPaddle');
     $('#leftPaddleDown').appendTo('#leftPaddle');
+    $('#topPaddleDown').appendTo('#topPaddle');
+    $('#bottomPaddleDown').appendTo('bottomtPaddle');
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -78,47 +107,57 @@ function runProgram(){
     ballCol();
     paddleCol();
     playerWins()
-    
-
-    if (doCollide(ball, rightPaddle) === true) 
-    {
-        ball.speedX = -5; // bounce ball off paddle Left
+    ballPaddleCollides() 
     }
 
-    if (doCollide(ball, leftPaddle) === true) 
-    {
-        ball.speedX = 5; // bounce ball off paddle right
-    }   
-}
-
   //scoring
-  function playerWins()
+function playerWins()
+{
+    if (p1Score === 10)
     {
-       if (p1Score === 10)
-       {
-         window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
+        window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
 
-         if(confirm)
-         {
-             resetGame();
-         }
-       }
-       
-         if (p2Score === 10)        
-       {
-         window.confirm("PLAYER 2 (RIGHT SIDE) WINS! Reset Game? ");
-
-          if(confirm)
-         {
+        if(confirm)
+        {
             resetGame();
         }
     }
+       
+    if (p2Score === 10)        
+    {
+        window.confirm("PLAYER 2 (RIGHT SIDE) WINS! Reset Game? ");
+
+        if(confirm)
+        {
+            resetGame();
+        }
+    }
+    if (p3Score === 10)        
+    {
+        window.confirm("PLAYER 3 (TOP) WINS! Reset Game? ");
+ 
+        if(confirm)
+        {
+            resetGame();
+        }
+    }
+    if (p4Score === 10)        
+    {
+        window.confirm("PLAYER 4 (BOTTOM) WINS! Reset Game? ");
   
+        if(confirm)
+        {
+            resetGame();
+        }
+    }
+}
+
+      
   /* 
   Called in response to events.
   */
 
-function handleP1KeyDown(event) //handles game starting and round restarting as well
+function handleP1KeyDown(event) //handles game starting and round restarting and 4 player switching
 {
     if (event.which === player1Input.UPW) 
     {
@@ -147,6 +186,30 @@ function handleP2KeyDown(event)
     }
 }
 
+function handleP3KeyDown(event) 
+{
+    if (event.which === player3Input.RIGHTD) 
+     {
+        topPaddle.speedX = 5;
+    }
+    if (event.which === player3Input.LEFTA) 
+    {
+        topPaddle.speedX = -5;
+    }
+}
+
+function handleP4KeyDown(event) 
+{
+    if (event.which === player4Input.RIGHT) 
+     {
+        bottomPaddle.speedX = 5;
+    }
+    if (event.which === player4Input.LEFT) 
+    {
+        bottomPaddle.speedX = -5;
+    }
+}
+
 function handleP1KeyUp(event) 
 {
     if (event.which === player1Input.UPW) 
@@ -170,6 +233,31 @@ function handleP2KeyUp(event)
         rightPaddle.speedY = 0;
     }
 }
+
+function handleP3KeyUp(event) 
+{
+    if (event.which === player3Input.RIGHTD) 
+     {
+        topPaddle.speedX = 0;
+    }
+    if (event.which === player3Input.LEFTA) 
+    {
+        topPaddle.speedX = 0;
+    }
+}
+
+function handleP4KeyUp(event) 
+{
+    if (event.which === player4Input.RIGHT) 
+     {
+        bottomPaddle.speedX = 0;
+    }
+    if (event.which === player4Input.LEFT) 
+    {
+        bottomPaddle.speedX = 0;
+    }
+}
+
 function paddleCol()
 {
     if (leftPaddle.y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
@@ -187,6 +275,23 @@ function paddleCol()
     if (rightPaddle.y < 0)
     {            
         rightPaddle.speedY = 5;
+    }
+    if (topPaddle >= boardWidth)
+    {
+        topPaddle.speedX = 5;
+    }
+    if (topPaddle < 0)
+    {
+        topPaddle.speedX = 5;
+    }
+
+    if (bottomPaddle >= boardWidth)
+    {
+        bottomPaddle.speedX = -5;
+    }
+    if (bottomPaddle < 0)
+    {
+        bottomPaddle.speedX = 5;
     }
 
     }
@@ -253,6 +358,29 @@ function doCollide(obj1, obj2) {
           }
 }
 
+function ballPaddleCollides()
+{
+    if (doCollide(ball, leftPaddle) === true) 
+    {
+        ball.speedX = 5; // bounce ball off paddle Left
+    }
+
+    if (doCollide(ball, rightPaddle) === true) 
+    {
+        ball.speedX = -5; // bounce ball off paddle right
+    }
+
+    if (doCollide(ball, topPaddle) === true) 
+    {
+        ball.speedY = 5; // bounce ball off paddle top
+    }
+
+    if (doCollide(ball, bottomPaddle) === true) 
+    {
+        ball.speedY = -5; // bounce ball off paddle bottom
+    }
+}
+
 function p1Scored()
 {
     p1Score++;
@@ -273,7 +401,9 @@ function p2Scored()
     function repositionGameItem()   // update the position of the gameitem along the y-axis
     {
         leftPaddle.y += leftPaddle.speedY;
-        rightPaddle.y += rightPaddle.speedY; 
+        rightPaddle.y += rightPaddle.speedY;
+        topPaddle.x += topPaddle.speedX; 
+        bottomPaddle.x += bottomPaddle.speedX; 
 
         ball.x += ball.speedX;
         ball.y += ball.speedY;
@@ -283,6 +413,8 @@ function p2Scored()
     {
         $('#leftPaddle').css("top", leftPaddle.y); 
         $('#rightPaddle').css("top", rightPaddle.y); 
+        $('#topPaddle').css("left", topPaddle.x); 
+        $('bottomPaddle').css("left", bottomPaddle.x); 
 
         $('#ball').css("left", ball.x); 
         $('#ball').css("top", ball.y); 
@@ -312,6 +444,16 @@ function resetBall()
 
 function resetGame()
 {
+    p1Score = 0;
+    p2Score = 0;
+    p3Score = 0;
+    p4Score = 0;
+
+    p1Counter.innerHTML = p1Score;
+    p2Counter.innerHTML = p2Score;
+    p3Counter.innerHTML = p3Score;
+    p4Counter.innerHTML = p4Score;
+
     ball.x = startingX;
     ball.y = startingY;
     ball.speedX = 0;
@@ -329,4 +471,4 @@ function resetGame()
   }
 
 
- 
+} 
