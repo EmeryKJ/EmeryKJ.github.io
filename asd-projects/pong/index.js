@@ -16,18 +16,19 @@ function runProgram(){
 
   var player1Input =
   {
-    "UP": 38,  
-    "DOWN": 40,
+    "UPW": 87,   
+    "DOWNS": 83,
     "ENTER": 13,
     "BACK": 8,
   };
 
   var player2Input =
   {
-    "UPW": 87,   
-    "DOWNS": 83,
+    "UP": 38,  
+    "DOWN": 40,
     "ENTER": 13,
     "BACK": 8,
+
   };
   
   // Game Item Objects
@@ -36,8 +37,13 @@ function runProgram(){
   var ball = makeObject('#ball');
 
     //UI Elements
+
   var p1Score = 0;
-  var p2Score = 0
+  var p2Score = 0;
+  var p3Score = 0;
+  var p4Score = 0;
+  var p1Counter = document.getElementById("p1Score");
+  var p2Counter = document.getElementById("p2Score");
 
   //Helper Vars
   var didP1Score = false;
@@ -54,10 +60,10 @@ function runProgram(){
     $(document).on('keydown', handleP2KeyDown);
   
     $(document).on('keyup', handleP2KeyUp); 
-    $(document).on('keyup', handleP1KeyUp); 
-
-
-
+    $(document).on('keyup', handleP1KeyUp);
+    
+    $('#rightPaddleDown').appendTo('#rightPaddle');
+    $('#leftPaddleDown').appendTo('#leftPaddle');
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -73,19 +79,43 @@ function runProgram(){
     redrawGameItem();
     ballCol();
     paddleCol();
+    
 
-    if (doCollide(ball, leftPaddle) === true) 
+    if (doCollide(ball, rightPaddle) === true) 
     {
         ball.speedX = -5; // bounce ball off paddle Left
     }
 
-    if (doCollide(ball, rightPaddle) === true) 
+    if (doCollide(ball, leftPaddle) === true) 
     {
         ball.speedX = 5; // bounce ball off paddle right
     }   
   }
 
+  }
+  //scoring
+//   playerWins()
+//   function playerWins()
+//   {
+//        if (p1Score === 10)
+//        {
+//          window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
 
+//          if(confirm)
+//          {
+//              resetGame();
+//          }
+//        }
+       
+//          if (p2Score === 10)        
+//        {
+//          window.confirm("PLAYER 2 (RIGHT SIDE) WINS! Reset Game? ");
+
+//           if(confirm)
+//          {
+//             resetGame();
+//         }
+//     }
   
   /* 
   Called in response to events.
@@ -93,11 +123,11 @@ function runProgram(){
 
 function handleP1KeyDown(event) //handles game starting and round restarting as well
 {
-    if (event.which === player1Input.UP) 
+    if (event.which === player1Input.UPW) 
     {
         leftPaddle.speedY = -5;
     }
-    if (event.which === player1Input.DOWN) 
+    if (event.which === player1Input.DOWNS) 
     {
         leftPaddle.speedY = 5;
     }
@@ -110,11 +140,11 @@ function handleP1KeyDown(event) //handles game starting and round restarting as 
 
 function handleP2KeyDown(event) 
 {
-    if (event.which === player2Input.UPW) 
+    if (event.which === player2Input.UP) 
      {
         rightPaddle.speedY = -5;
     }
-    if (event.which === player2Input.DOWNS) 
+    if (event.which === player2Input.DOWN) 
     {
        rightPaddle.speedY = 5;
     }
@@ -122,11 +152,11 @@ function handleP2KeyDown(event)
 
 function handleP1KeyUp(event) 
 {
-    if (event.which === player1Input.UP) 
+    if (event.which === player1Input.UPW) 
      {
         leftPaddle.speedY = 0;
     }
-    if (event.which === player1Input.DOWN) 
+    if (event.which === player1Input.DOWNS) 
     {
         leftPaddle.speedY = 0;
     }
@@ -134,11 +164,11 @@ function handleP1KeyUp(event)
 
 function handleP2KeyUp(event) 
 {
-    if (event.which === player2Input.UPW) 
+    if (event.which === player2Input.UP) 
      {
         rightPaddle.speedY = 0;
     }
-    if (event.which === player2Input.DOWNS) 
+    if (event.which === player2Input.DOWN) 
     {
         rightPaddle.speedY = 0;
     }
@@ -187,16 +217,16 @@ function ballCol()
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 function makeObject(id) {
-var gameitem = 
-  {
-    id: id,
-    x: parseFloat($(id).css('left')),
-    y: parseFloat($(id).css('top')),
-    width: $(id).width(),
-    height: $(id).height(),
-    speedX: 0,
-    speedY: 0,
-  }
+    var gameitem = 
+    {
+        id: id,
+        x: parseFloat($(id).css('left')),
+        y: parseFloat($(id).css('top')),
+        width: $(id).width(),
+        height: $(id).height(),
+        speedX: 0,
+        speedY: 0,
+    }
    return gameitem;
 
 }
@@ -228,7 +258,8 @@ function doCollide(obj1, obj2) {
 
 function p1Scored()
 {
-    p1Score += 1;
+    p1Score++;
+    p1Counter.innerHTML = p1Score;
     didP1Score = true;
     didP2Score = false;
     resetBall();
@@ -236,7 +267,8 @@ function p1Scored()
 
 function p2Scored()
 {
-    p2Score += 1;
+    p2Score++;
+    p2Counter.innerHTML = p2Score;
     didP2Score = true;
     didP1Score = false;
     resetBall();
@@ -259,34 +291,17 @@ function p2Scored()
         $('#ball').css("top", ball.y); 
     }
 
-    // function between0And4(X, Y)      //sets a slightly random angle of bounce, not working right now
-    // {
-    //    var result = Math.floor(Math.random() * 4);
-
-    //    if (result = 4)
-    //    {
-    //        if (X = x)
-    //        {
-    //          ballSpeedX =+ 3; 
-    //        }
-    //        else if(Y = y)
-    //        {
-    //            ballSpeedY =+ 3;
-    //        }
-    //    }
-    // }
-
 function resetBall()
 {
-    var ranNum = Math.ceil(Math.random() * 4) * (Math.round(Math.random()) ? 2 : -1)
-    //this gets a random number between 1 and 5, adds a minus sign 50% of the time
+    var ranNum = Math.ceil(Math.random() * 3) * (Math.round(Math.random()) ? 1 : -1)
+    //this gets a random number between 1 and 3, adds a minus sign 50% of the time
 
         ball.x = startingX;
         ball.y = startingY;
         ball.speedX = 0;
         ball.speedY = 0;
 
-        if (didP1Score === true)
+        if (didP1Score === false)
         {
             ball.speedX = -5;
         }  
@@ -298,6 +313,16 @@ function resetBall()
         ball.speedY = ranNum;
 }
 
+function resetGame()
+    {
+        ball.x = startingX;
+        ball.y = startingY;
+        ball.speedX = 0;
+        ball.speedY = 0;
+        p1Score = 0;
+        p2Score = 0;
+    }
+
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
@@ -305,5 +330,5 @@ function resetBall()
     // turn off event handlers
     $(document).off();
   }
-  
-}
+
+ 

@@ -11,7 +11,13 @@ body {
   position: relative;
 }
 
-/* .score
+#instructions
+{
+  position: relative;
+  top: 50px;
+}
+
+.score
 {
   width: 80px;
   height: 40px;
@@ -24,17 +30,17 @@ body {
 
 #p1Score
 {
-  text-align: right;
-  left: 225px;
+  text-align: left;
+  left: 140px;
   top: 5px
 }
 
 #p2Score
 {
-  text-align: left;
-  left: 140px;
+  text-align: right;
+  left: 225px;
   top: 5px
-} */
+}
 
 #centerLine
 {
@@ -55,14 +61,31 @@ body {
   position: absolute;
 }
 
-#leftPaddle 
+#rightPaddle 
 {
+    border: 2px solid red;
     left: 390px;
+    text-align: center;
+}
+#rightPaddleDown
+{
+  position: absolute;
+  top: 43px;
+  left: 7px;
 }
 
-#rightPaddle
+#leftPaddle
 {
+    border: 2px solid green;
     left: 50px;
+    text-align: center;   
+}
+
+#leftPaddleDown
+{
+  position: absolute;
+  top: 43px;
+  left: 6px;
 }
 
 #ball
