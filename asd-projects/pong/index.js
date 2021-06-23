@@ -40,8 +40,6 @@ function runProgram(){
 
   var p1Score = 0;
   var p2Score = 0;
-  var p3Score = 0;
-  var p4Score = 0;
   var p1Counter = document.getElementById("p1Score");
   var p2Counter = document.getElementById("p2Score");
 
@@ -94,28 +92,27 @@ function runProgram(){
 
   }
   //scoring
-//   playerWins()
-//   function playerWins()
-//   {
-//        if (p1Score === 10)
-//        {
-//          window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
+  function playerWins()
+  {
+       if (p1Score === 10)
+       {
+         window.confirm("PLAYER 1 (LEFT SIDE) WINS! Reset Game? ");
 
-//          if(confirm)
-//          {
-//              resetGame();
-//          }
-//        }
+         if(confirm)
+         {
+             resetGame();
+         }
+       }
        
-//          if (p2Score === 10)        
-//        {
-//          window.confirm("PLAYER 2 (RIGHT SIDE) WINS! Reset Game? ");
+         if (p2Score === 10)        
+       {
+         window.confirm("PLAYER 2 (RIGHT SIDE) WINS! Reset Game? ");
 
-//           if(confirm)
-//          {
-//             resetGame();
-//         }
-//     }
+          if(confirm)
+         {
+            resetGame();
+        }
+    }
   
   /* 
   Called in response to events.
@@ -319,8 +316,6 @@ function resetGame()
         ball.y = startingY;
         ball.speedX = 0;
         ball.speedY = 0;
-        p1Score = 0;
-        p2Score = 0;
     }
 
   function endGame() {
@@ -331,4 +326,5 @@ function resetGame()
     $(document).off();
   }
 
+}
  
