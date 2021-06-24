@@ -95,7 +95,7 @@ body {
 
 #topPaddle 
 {
-  border: 2px solid red;
+  border: 2px solid purple;
   top: 20px;
   left: 180px;
   width: 80px;
@@ -111,7 +111,7 @@ body {
 
 #bottomPaddle 
 {
-  border: 2px solid red;
+  border: 2px solid blue;
   top: 400px;
   left: 180px;
   width: 80px;
@@ -121,8 +121,8 @@ body {
 #bottomPaddleDown
 {
   position: absolute;
-  top: 386px;
-  left: 183px;
+  top: -16px;
+  left: 0px;
 }
 
 #ball

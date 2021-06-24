@@ -72,6 +72,14 @@ function runProgram(){
   var startingX = ball.x;
   var startingY = ball.y;
 
+  var p1Touched = false;    
+  var p2Touched = false;
+  var p3Touched = false;
+  var p4Touched = false;
+
+  var someoneScored = false;
+
+  var theGameisAfoot = false;   //triggered if a paddle hits the ball, otherwise the ball just bounces around
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
@@ -90,7 +98,7 @@ function runProgram(){
     $('#rightPaddleDown').appendTo('#rightPaddle');
     $('#leftPaddleDown').appendTo('#leftPaddle');
     $('#topPaddleDown').appendTo('#topPaddle');
-    $('#bottomPaddleDown').appendTo('bottomtPaddle');
+    $('#bottomPaddleDown').appendTo('#bottomPaddle');
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -108,6 +116,7 @@ function runProgram(){
     paddleCol();
     playerWins()
     ballPaddleCollides() 
+    paddleTouchingManager()
     }
 
   //scoring
@@ -260,15 +269,15 @@ function handleP4KeyUp(event)
 
 function paddleCol()
 {
-    if (leftPaddle.y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
-    {           
+    if (leftPaddle.y >= boardHeight - 80) //the paddle seems to collide from the left edge,                                        
+    {                                     //meaning the right edge goes over the box. paddles are 80px tall 
         leftPaddle.speedY = -5;
     }
     if (leftPaddle.y < 0)
     {            
         leftPaddle.speedY = 5;
     }
-    if (rightPaddle.y >= boardHeight - 80) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
+    if (rightPaddle.y >= boardHeight - 80)                                       
     {           
         rightPaddle.speedY = -5;
     }
@@ -276,20 +285,20 @@ function paddleCol()
     {            
         rightPaddle.speedY = 5;
     }
-    if (topPaddle >= boardWidth)
+    if (topPaddle.x >= boardWidth -80)
     {
-        topPaddle.speedX = 5;
+        topPaddle.speedX = -5;
     }
-    if (topPaddle < 0)
+    if (topPaddle.x < 0)
     {
         topPaddle.speedX = 5;
     }
 
-    if (bottomPaddle >= boardWidth)
+    if (bottomPaddle.x >= boardWidth -80)
     {
         bottomPaddle.speedX = -5;
     }
-    if (bottomPaddle < 0)
+    if (bottomPaddle.x < 0)
     {
         bottomPaddle.speedX = 5;
     }
@@ -297,22 +306,51 @@ function paddleCol()
     }
 function ballCol()    
 {
-    if (ball.y >= boardHeight) //the board height is taller than the white box by one paddle, paddles are 80px tall                                        
-    {           
-        ball.speedY = -5;
-    }
-    if (ball.y < 0)
-    {            
-        ball.speedY = 5;
-    }
-    if (ball.x >= boardWidth)
+    
+    if (theGameisAfoot === true)
     {
-        p2Scored();
+        if (ball.y >= boardHeight)                                         
+        {           
+            someoneScored = true;
+            whoScored();
+        }
+        if (ball.y < 0)
+        {            
+            someoneScored = true;
+            whoScored();
+        }
+        if (ball.x >= boardWidth)
+        {
+            someoneScored = true;
+            whoScored();
+        }
+        if (ball.x < 0)
+        {
+            someoneScored = true;
+            whoScored();
+        }
     }
-    if (ball.x < 0)
+
+    else
     {
-        p1Scored();
+        if (ball.y >= boardHeight)                                         
+        {           
+            ball.speedY = -5
+        }
+        if (ball.y < 0)
+        {            
+            ball.speedY = 5
+        }
+        if (ball.x >= boardWidth)
+        {
+            ball.speedX = -5
+        }
+        if (ball.x < 0)
+        {
+            ball.speedX = 5
+        }
     }
+
      
 }
   ////////////////////////////////////////////////////////////////////////////////
@@ -363,21 +401,84 @@ function ballPaddleCollides()
     if (doCollide(ball, leftPaddle) === true) 
     {
         ball.speedX = 5; // bounce ball off paddle Left
+        theGameisAfoot = true;
+        p1Touched = true;
+        
     }
 
     if (doCollide(ball, rightPaddle) === true) 
     {
         ball.speedX = -5; // bounce ball off paddle right
+        theGameisAfoot = true;
+        p2Touched = true;
+        
     }
 
     if (doCollide(ball, topPaddle) === true) 
     {
         ball.speedY = 5; // bounce ball off paddle top
+        theGameisAfoot = true;
+        p3Touched = true;
+        
     }
 
     if (doCollide(ball, bottomPaddle) === true) 
     {
         ball.speedY = -5; // bounce ball off paddle bottom
+        theGameisAfoot = true;
+        p4Touched = true;
+        
+    }
+}
+
+function paddleTouchingManager()    //if one paddle touches the ball, all other paddles are set to not be the most recent touch
+{
+    if (p1Touched === true)
+    {
+        p2Touched = false;
+        p3Touched = false;
+        p4Touched = false;
+    }
+
+   if (p2Touched === true)
+    {
+        p1Touched = false;
+        p3Touched = false;
+        p4Touched = false;
+    }
+
+    if (p3Touched === true)
+    {
+        p1Touched = false;
+        p2Touched = false;
+        p4Touched = false;
+    }
+
+    if (p4Touched === true)
+    {
+        p1Touched = false;
+        p2Touched = false;
+        p3Touched = false;
+    }
+}
+
+function whoScored()
+{
+    if (someoneScored === true && p1Touched === true)
+    {
+        p1Scored();
+    }
+    if (someoneScored === true && p2Touched === true)
+    {
+        p2Scored();
+    }
+    if (someoneScored === true && p3Touched === true)
+    {
+        p3Scored();
+    }
+    if (someoneScored === true && p4Touched === true)
+    {
+        p4Scored();
     }
 }
 
@@ -386,7 +487,7 @@ function p1Scored()
     p1Score++;
     p1Counter.innerHTML = p1Score;
     didP1Score = true;
-    didP2Score = false;
+    someoneScored = false;
     resetBall();
 }
 
@@ -394,8 +495,24 @@ function p2Scored()
 {
     p2Score++;
     p2Counter.innerHTML = p2Score;
-    didP2Score = true;
     didP1Score = false;
+    someoneScored = false;
+    resetBall();
+}
+
+function p3Scored()
+{
+    p3Score++;
+    p3Counter.innerHTML = p3Score;
+    someoneScored = false;
+    resetBall();
+}
+
+function p4Scored()
+{
+    p4Score++;
+    p4Counter.innerHTML = p4Score;
+    someoneScored = false;
     resetBall();
 }
     function repositionGameItem()   // update the position of the gameitem along the y-axis
@@ -414,7 +531,7 @@ function p2Scored()
         $('#leftPaddle').css("top", leftPaddle.y); 
         $('#rightPaddle').css("top", rightPaddle.y); 
         $('#topPaddle').css("left", topPaddle.x); 
-        $('bottomPaddle').css("left", bottomPaddle.x); 
+        $('#bottomPaddle').css("left", bottomPaddle.x); 
 
         $('#ball').css("left", ball.x); 
         $('#ball').css("top", ball.y); 
