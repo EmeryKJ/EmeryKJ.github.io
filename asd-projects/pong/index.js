@@ -116,7 +116,6 @@ function runProgram(){
     paddleCol();
     playerWins()
     ballPaddleCollides() 
-    paddleTouchingManager()
     }
 
   //scoring
@@ -402,64 +401,62 @@ function ballPaddleCollides()
     {
         ball.speedX = 5; // bounce ball off paddle Left
         theGameisAfoot = true;
-        p1Touched = true;
-        
+        p1touchManager()
     }
 
     if (doCollide(ball, rightPaddle) === true) 
     {
-        ball.speedX = -5; // bounce ball off paddle right
-        theGameisAfoot = true;
-        p2Touched = true;
-        
+        ball.speedX = -5; // bounce ball off paddle right 
+        theGameisAfoot = true;   
+        p2touchManager()
     }
 
     if (doCollide(ball, topPaddle) === true) 
     {
         ball.speedY = 5; // bounce ball off paddle top
         theGameisAfoot = true;
-        p3Touched = true;
-        
+        p3touchManager()
     }
 
     if (doCollide(ball, bottomPaddle) === true) 
     {
         ball.speedY = -5; // bounce ball off paddle bottom
         theGameisAfoot = true;
-        p4Touched = true;
-        
+        p4touchManager() 
     }
+
 }
 
-function paddleTouchingManager()    //if one paddle touches the ball, all other paddles are set to not be the most recent touch
+function p1touchManager()    //the touch managers set one player most recent touch to true and all others to false
 {
-    if (p1Touched === true)
-    {
-        p2Touched = false;
-        p3Touched = false;
-        p4Touched = false;
-    }
+    p1touched = true;
+    p2Touched = false;
+    p3Touched = false;
+    p4Touched = false;
+}
 
-   if (p2Touched === true)
-    {
-        p1Touched = false;
-        p3Touched = false;
-        p4Touched = false;
-    }
+function p2touchManager()    //
+{
+    p2touched = true;
+    p1Touched = false;
+    p3Touched = false;
+    p4Touched = false;
+}
 
-    if (p3Touched === true)
-    {
-        p1Touched = false;
-        p2Touched = false;
-        p4Touched = false;
-    }
+function p3touchManager()    //
+{
+    p3touched = true;
+    p1Touched = false;
+    p2Touched = false;
+    p4Touched = false;
+}
 
-    if (p4Touched === true)
-    {
-        p1Touched = false;
-        p2Touched = false;
-        p3Touched = false;
-    }
+function p4touchManager()    //
+{
+    p4touched = true;
+    p1Touched = false;
+    p2Touched = false;
+    p3Touched = false;
 }
 
 function whoScored()
@@ -547,6 +544,13 @@ function resetBall()
         ball.speedX = 0;
         ball.speedY = 0;
 
+        theGameisAfoot = false;
+        p1touched = false;
+        p2touched = false;
+        p3touched = false;
+        p4touched = false;
+    
+
         if (didP1Score === false)
         {
             ball.speedX = -5;
@@ -565,6 +569,12 @@ function resetGame()
     p2Score = 0;
     p3Score = 0;
     p4Score = 0;
+
+    theGameisAfoot = false;
+    p1touched = false;
+    p2touched = false;
+    p3touched = false;
+    p4touched = false;
 
     p1Counter.innerHTML = p1Score;
     p2Counter.innerHTML = p2Score;
