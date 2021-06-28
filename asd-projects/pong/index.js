@@ -437,7 +437,7 @@ function p1touchManager()    //the touch managers set one player most recent tou
 
 function p2touchManager()    //
 {
-    p2touched = true;
+    p2Touched = true;
     p1Touched = false;
     p3Touched = false;
     p4Touched = false;
@@ -445,7 +445,7 @@ function p2touchManager()    //
 
 function p3touchManager()    //
 {
-    p3touched = true;
+    p3Touched = true;
     p1Touched = false;
     p2Touched = false;
     p4Touched = false;
@@ -453,7 +453,7 @@ function p3touchManager()    //
 
 function p4touchManager()    //
 {
-    p4touched = true;
+    p4Touched = true;
     p1Touched = false;
     p2Touched = false;
     p3Touched = false;
@@ -545,10 +545,10 @@ function resetBall()
         ball.speedY = 0;
 
         theGameisAfoot = false;
-        p1touched = false;
-        p2touched = false;
-        p3touched = false;
-        p4touched = false;
+        p1Touched = false;
+        p2Touched = false;
+        p3Touched = false;
+        p4Touched = false;
     
 
         if (didP1Score === false)
@@ -571,10 +571,10 @@ function resetGame()
     p4Score = 0;
 
     theGameisAfoot = false;
-    p1touched = false;
-    p2touched = false;
-    p3touched = false;
-    p4touched = false;
+    p1Touched = false;
+    p2Touched = false;
+    p3Touched = false;
+    p4Touched = false;
 
     p1Counter.innerHTML = p1Score;
     p2Counter.innerHTML = p2Score;
