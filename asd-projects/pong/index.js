@@ -429,7 +429,7 @@ function ballPaddleCollides()
 
 function p1touchManager()    //the touch managers set one player most recent touch to true and all others to false
 {
-    p1touched = true;
+    p1Touched = true;
     p2Touched = false;
     p3Touched = false;
     p4Touched = false;
